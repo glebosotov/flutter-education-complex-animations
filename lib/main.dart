@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:flutter/services.dart';
 import 'package:motion_sensors/motion_sensors.dart';
 
 void main() {
@@ -162,70 +163,71 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
             ),
           ),
         Positioned.fill(
-          child: Transform.rotate(
-            angle: rotationY,
-            // Rotation X
-            child: Transform.rotate(
-              angle: rotationX,
-              // Drag Alignment
-              child: Align(
-                alignment: _dragAlignment,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // Tilt gradient
-                    StreamBuilder(
-                      stream: stream,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) return const Text('ERROR');
-                        final event =
-                            snapshot.data ?? AbsoluteOrientationEvent(0, 0, 0);
+          child: Align(
+            alignment: _dragAlignment,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Tilt gradient
+                StreamBuilder(
+                  stream: stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) return const Text('ERROR');
+                    final event =
+                        snapshot.data ?? AbsoluteOrientationEvent(0, 0, 0);
 
-                        // Lift-up effect
-                        return AnimatedContainer(
-                          duration: const Duration(milliseconds: 100),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            boxShadow: isLifted
-                                ? const [
-                                    BoxShadow(
-                                      color: Colors.black45,
-                                      blurRadius: 10,
-                                      spreadRadius: 5,
-                                    ),
-                                  ]
-                                : null,
-                          ),
-                          width: isLifted ? 200 * 0.9 : 200 * 0.8,
-                          height: isLifted ? 200 * 0.9 : 200 * 0.8,
-                          child: ShaderMask(
-                            shaderCallback: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                for (var value
-                                    in event.values.map(_radianToDegree))
-                                  HSVColor.fromAHSV(
-                                    hue,
-                                    value * scale % 360,
-                                    saturation,
-                                    1.0,
-                                  ).toColor(),
-                              ],
-                            ).createShader,
-                            child: GestureDetector(
-                              onPanUpdate: (details) {
-                                setState(() {
-                                  rotationY += details.delta.dx /
-                                      60; // Adjust sensitivity as needed
-                                  rotationX += details.delta.dy /
-                                      60; // Adjust sensitivity as needed
-                                });
-                              },
-                              onPanEnd: (details) {
-                                angularVelocityX = rotationY / 60;
-                                angularVelocityY = rotationX / 60;
-                              },
+                    // Lift-up effect
+                    return AnimatedContainer(
+                      duration: const Duration(milliseconds: 100),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: isLifted
+                            ? const [
+                                BoxShadow(
+                                  color: Colors.black45,
+                                  blurRadius: 10,
+                                  spreadRadius: 5,
+                                ),
+                              ]
+                            : null,
+                      ),
+                      width: isLifted ? 200 * 0.9 : 200 * 0.8,
+                      height: isLifted ? 200 * 0.9 : 200 * 0.8,
+                      child: ShaderMask(
+                        shaderCallback: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            for (var value in event.values.map(_radianToDegree))
+                              HSVColor.fromAHSV(
+                                hue,
+                                value * scale % 360,
+                                saturation,
+                                1.0,
+                              ).toColor(),
+                          ],
+                        ).createShader,
+                        child: GestureDetector(
+                          onPanUpdate: (details) {
+                            setState(() {
+                              rotationY += details.delta.dx /
+                                  80; // Adjust sensitivity as needed
+                              rotationX += details.delta.dy /
+                                  80; // Adjust sensitivity as needed
+                            });
+                            if (radiansToDegrees(rotationX) % 5 < 0.5 ||
+                                radiansToDegrees(rotationY) % 5 < 0.5) {
+                              HapticFeedback.lightImpact();
+                            }
+                          },
+                          onPanEnd: (details) {
+                            angularVelocityX = rotationY / 150;
+                            angularVelocityY = rotationX / 150;
+                          },
+                          child: Transform.rotate(
+                            angle: rotationX,
+                            child: Transform.rotate(
+                              angle: rotationY,
                               child: Container(
                                 width: 200,
                                 height: 200,
@@ -239,43 +241,46 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                    GestureDetector(
-                      onPanDown: (details) {
-                        isLifted = true;
-                        _controller.stop();
-                      },
-                      onPanUpdate: (details) {
-                        setState(() {
-                          rotationX = 0;
-                          rotationY = 0;
-                          angularVelocityX = 0;
-                          angularVelocityY = 0;
-
-                          _dragAlignment += Alignment(
-                            details.delta.dx / (size.width / 2),
-                            details.delta.dy / (size.height / 2),
-                          );
-                        });
-                      },
-                      onPanEnd: (details) {
-                        isLifted = false;
-                        _runAnimation(details.velocity.pixelsPerSecond, size);
-                      },
-                      child: Container(
-                        width: 120,
-                        height: 120,
-                        decoration: const BoxDecoration(
-                          // color: Colors.green,
-                          shape: BoxShape.circle,
                         ),
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              ),
+                GestureDetector(
+                  onPanDown: (details) {
+                    isLifted = true;
+                    HapticFeedback.lightImpact();
+                    _controller.stop();
+                  },
+                  onPanUpdate: (details) {
+                    setState(
+                      () {
+                        // rotationX = 0;
+                        // rotationY = 0;
+                        // angularVelocityX = 0;
+                        // angularVelocityY = 0;
+
+                        _dragAlignment += Alignment(
+                          details.delta.dx / (size.width / 2),
+                          details.delta.dy / (size.height / 2),
+                        )..rotateAroundCenter(-rotationX, -rotationY);
+                      },
+                    );
+                  },
+                  onPanEnd: (details) {
+                    isLifted = false;
+                    _runAnimation(details.velocity.pixelsPerSecond, size);
+                  },
+                  child: Container(
+                    width: 120,
+                    height: 120,
+                    decoration: const BoxDecoration(
+                      // color: Colors.green,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -288,4 +293,27 @@ double _radianToDegree(double radian) => (radian * 180 / math.pi) + 180;
 
 extension AbsoluteOrientationEventX on AbsoluteOrientationEvent {
   List<double> get values => [yaw, pitch, roll];
+}
+
+extension RotationExtension on Alignment {
+  /// Rotates the alignment around its center by the specified angles in radians for x and y axes.
+  Alignment rotateAroundCenter(double radiansX, double radiansY) {
+    final double cosThetaX = math.cos(radiansX);
+    final double sinThetaX = math.sin(radiansX);
+
+    final double rotatedX = x * cosThetaX - y * sinThetaX;
+    final double rotatedYX = x * sinThetaX + y * cosThetaX;
+
+    final double cosThetaY = math.cos(radiansY);
+    final double sinThetaY = math.sin(radiansY);
+
+    final double rotatedY = rotatedYX * cosThetaY - rotatedX * sinThetaY;
+    final double rotatedXY = rotatedYX * sinThetaY + rotatedX * cosThetaY;
+
+    return Alignment(rotatedY, rotatedXY);
+  }
+}
+
+double radiansToDegrees(double radians) {
+  return radians * (180 / math.pi);
 }
