@@ -1,16 +1,13 @@
-# interactive_animation_demo
+# Complex Flutter Animation Demo
 
-A new Flutter project.
+This project aims to showcase various types of animation within the Flutter framework. The project includes:
 
-## Getting Started
+- Implicit animations
+- Expclicit animations
 
-This project is a starting point for a Flutter application.
+The animations themselves are:
 
-A few resources to get you started if this is your first Flutter project:
+- Physics-based animaitons
+- Animations based on motion sensors
+- Animations reactive to gestures
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
