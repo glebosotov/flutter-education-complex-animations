@@ -45,7 +45,7 @@ class _AnimationDemoState extends State<AnimationDemo> {
           children: [
             _AnimatedComponent(_showDebugData),
             Align(
-              alignment: Alignment.bottomCenter,
+              alignment: const Alignment(0, 0.9),
               child: ElevatedButton.icon(
                 onPressed: () =>
                     setState(() => _showDebugData = !_showDebugData),
@@ -70,10 +70,16 @@ class _AnimatedComponent extends StatefulWidget {
 
 class _AnimatedComponentState extends State<_AnimatedComponent>
     with SingleTickerProviderStateMixin {
+  static const dimension = 200.0;
+  static const liftedScale = 1.1;
+
+  static const rotationSensitivity = 80;
+
   late AnimationController _controller;
   Alignment _dragAlignment = Alignment.center;
   late Animation<Alignment> _animation;
 
+  /// Bring the object back to center with spring physics animation
   void _runAnimation(Offset pixelsPerSecond, Size size) {
     _animation = _controller.drive(
       AlignmentTween(
@@ -95,7 +101,11 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
 
     final simulation = SpringSimulation(spring, 0, 1, -unitVelocity);
 
-    _controller.animateWith(simulation);
+    try {
+      _controller.animateWith(simulation);
+    } on TickerCanceled catch (e) {
+      debugPrint('Ticker canceled: $e');
+    }
   }
 
   @override
@@ -145,7 +155,6 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // Rotation Y
     return Stack(
       children: [
         if (widget.showDebugData)
@@ -191,14 +200,15 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
                               ]
                             : null,
                       ),
-                      width: isLifted ? 200 * 0.9 : 200 * 0.8,
-                      height: isLifted ? 200 * 0.9 : 200 * 0.8,
+                      width: dimension * (isLifted ? liftedScale : 1),
+                      height: dimension * (isLifted ? liftedScale : 1),
                       child: ShaderMask(
                         shaderCallback: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            for (var value in event.values.map(_radianToDegree))
+                            for (var value
+                                in event.values.map(radiansToDegrees))
                               HSVColor.fromAHSV(
                                 hue,
                                 value * scale % 360,
@@ -210,10 +220,10 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
                         child: GestureDetector(
                           onPanUpdate: (details) {
                             setState(() {
-                              rotationY += details.delta.dx /
-                                  80; // Adjust sensitivity as needed
-                              rotationX += details.delta.dy /
-                                  80; // Adjust sensitivity as needed
+                              rotationY +=
+                                  details.delta.dx / rotationSensitivity;
+                              rotationX +=
+                                  details.delta.dy / rotationSensitivity;
                             });
                             if (radiansToDegrees(rotationX) % 5 < 0.5 ||
                                 radiansToDegrees(rotationY) % 5 < 0.5) {
@@ -229,8 +239,8 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
                             child: Transform.rotate(
                               angle: rotationY,
                               child: Container(
-                                width: 200,
-                                height: 200,
+                                width: dimension,
+                                height: dimension,
                                 decoration: const BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage('assets/go.png'),
@@ -252,21 +262,12 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
                     HapticFeedback.lightImpact();
                     _controller.stop();
                   },
-                  onPanUpdate: (details) {
-                    setState(
-                      () {
-                        // rotationX = 0;
-                        // rotationY = 0;
-                        // angularVelocityX = 0;
-                        // angularVelocityY = 0;
-
-                        _dragAlignment += Alignment(
-                          details.delta.dx / (size.width / 2),
-                          details.delta.dy / (size.height / 2),
-                        )..rotateAroundCenter(-rotationX, -rotationY);
-                      },
-                    );
-                  },
+                  onPanUpdate: (details) => setState(
+                    () => _dragAlignment += Alignment(
+                      details.delta.dx / (size.width / 2),
+                      details.delta.dy / (size.height / 2),
+                    )..rotateAroundCenter(-rotationX, -rotationY),
+                  ),
                   onPanEnd: (details) {
                     isLifted = false;
                     _runAnimation(details.velocity.pixelsPerSecond, size);
@@ -275,7 +276,6 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
                     width: 120,
                     height: 120,
                     decoration: const BoxDecoration(
-                      // color: Colors.green,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -288,8 +288,6 @@ class _AnimatedComponentState extends State<_AnimatedComponent>
     );
   }
 }
-
-double _radianToDegree(double radian) => (radian * 180 / math.pi) + 180;
 
 extension AbsoluteOrientationEventX on AbsoluteOrientationEvent {
   List<double> get values => [yaw, pitch, roll];
