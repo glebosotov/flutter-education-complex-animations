@@ -8,18 +8,18 @@ class ComplexAnimationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Stack(
-          fit: StackFit.expand,
+          fit: StackFit.loose,
           children: [
-            Positioned.fill(
-              child: AlignReturner(
-                child: PickupScaler(
-                  defaultSize: Size.square(_Component.dimension),
-                  child: _Component(),
-                ),
+            AlignReturner(
+              builder: (context, child, isLifted) => PickupScaler(
+                defaultSize: const Size.square(_Component.dimension),
+                isLifted: isLifted,
+                child: child,
               ),
+              child: const _Component(),
             ),
           ],
         ),
