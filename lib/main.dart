@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interactive_animation_demo/hero/complex_hero.dart';
 import 'package:interactive_animation_demo/hero/hero.dart';
+import 'package:interactive_animation_demo/page_transition.dart';
 
 import 'complex_animation/complex_animation.dart';
 
@@ -59,6 +60,13 @@ class HomePage extends StatelessWidget {
                 builder: (_) => const HeroPage(
                   heroType: HeroType.from,
                 ),
+              ),
+            ),
+            _GridTile(
+              name: 'Page Transition',
+              icon: Icons.compare_arrows_sharp,
+              destination: MaterialPageRoute(
+                builder: (_) => const PageTransitionExample(),
               ),
             ),
           ],
