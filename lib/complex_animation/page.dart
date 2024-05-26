@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'implicit.dart';
+
 class ComplexAnimationPage extends StatelessWidget {
   const ComplexAnimationPage({super.key});
 
@@ -11,7 +13,12 @@ class ComplexAnimationPage extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             Positioned.fill(
-              child: _Component(),
+              child: Center(
+                child: PickupScaler(
+                  defaultSize: Size.square(_Component.dimension),
+                  child: _Component(),
+                ),
+              ),
             ),
           ],
         ),
