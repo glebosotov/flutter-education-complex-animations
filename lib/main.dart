@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactive_animation_demo/hero/complex_hero.dart';
 import 'package:interactive_animation_demo/hero/hero.dart';
 
 import 'complex_animation/complex_animation.dart';
@@ -49,6 +50,15 @@ class HomePage extends StatelessWidget {
               icon: Icons.hexagon_rounded,
               destination: MaterialPageRoute(
                 builder: (_) => const SimpleHero(),
+              ),
+            ),
+            _GridTile(
+              name: 'Complex Hero',
+              icon: Icons.egg,
+              destination: MaterialPageRoute(
+                builder: (_) => const HeroPage(
+                  heroType: HeroType.from,
+                ),
               ),
             ),
           ],
