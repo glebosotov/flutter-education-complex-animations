@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interactive_animation_demo/complex_animation/explicit.dart';
 
 import 'implicit.dart';
+import 'shader.dart';
 
 class ComplexAnimationPage extends StatelessWidget {
   const ComplexAnimationPage({super.key});
@@ -19,7 +20,9 @@ class ComplexAnimationPage extends StatelessWidget {
                 isLifted: isLifted,
                 child: child,
               ),
-              child: const _Component(),
+              child: const SparkleAdder(
+                child: _Component(),
+              ),
             ),
           ],
         ),
