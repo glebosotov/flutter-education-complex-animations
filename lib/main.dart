@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:interactive_animation_demo/hero/complex_hero.dart';
 import 'package:interactive_animation_demo/hero/hero.dart';
 import 'package:interactive_animation_demo/page_transition.dart';
+import 'package:interactive_animation_demo/painter.dart';
 import 'package:interactive_animation_demo/rive.dart';
 
 import 'complex_animation/complex_animation.dart';
@@ -75,6 +76,13 @@ class HomePage extends StatelessWidget {
               icon: Icons.animation,
               destination: MaterialPageRoute(
                 builder: (_) => const RivePage(),
+              ),
+            ),
+            _GridTile(
+              name: 'Painter',
+              icon: Icons.brush,
+              destination: MaterialPageRoute(
+                builder: (_) => const PainterPage(),
               ),
             ),
           ],
