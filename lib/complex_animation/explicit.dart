@@ -12,7 +12,8 @@ class AlignReturner extends StatefulWidget {
   State<AlignReturner> createState() => _AlignReturnerState();
 }
 
-class _AlignReturnerState extends State<AlignReturner> {
+class _AlignReturnerState extends State<AlignReturner>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   Alignment _dragAlignment = Alignment.center;
   late Animation<Alignment> _animation;
@@ -26,15 +27,27 @@ class _AlignReturnerState extends State<AlignReturner> {
   @override
   void initState() {
     super.initState();
+
+    _controller = AnimationController(vsync: this);
+
+    _controller.addListener(
+      () => setState(
+        () => _dragAlignment = _animation.value,
+      ),
+    );
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return Align(
+      alignment: _dragAlignment,
+      child: widget.child,
+    );
   }
 }
