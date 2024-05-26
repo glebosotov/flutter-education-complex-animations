@@ -11,3 +11,4 @@ The animations themselves are:
 - Animations based on motion sensors
 - Animations reactive to gestures
 
+## Old version of the project can be found in the `backup` branch
