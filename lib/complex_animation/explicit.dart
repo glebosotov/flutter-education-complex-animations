@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
 
 class AlignReturner extends StatefulWidget {
   final Widget child;
@@ -23,17 +22,14 @@ class _AlignReturnerState extends State<AlignReturner>
   Alignment _dragAlignment = Alignment.center;
   late Animation<Alignment> _animation;
 
-  static const _spring = SpringDescription(
-    mass: 30,
-    stiffness: 1,
-    damping: 1,
-  );
-
   @override
   void initState() {
     super.initState();
 
-    _controller = AnimationController(vsync: this);
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
 
     _controller.addListener(
       () => setState(
@@ -56,15 +52,8 @@ class _AlignReturnerState extends State<AlignReturner>
       ),
     );
 
-    final unitsPerSecondX = pixelsPerSecond.dx / size.width;
-    final unitsPerSecondY = pixelsPerSecond.dy / size.height;
-    final unitsPerSecond = Offset(unitsPerSecondX, unitsPerSecondY);
-    final unitVelocity = unitsPerSecond.distance;
-
-    final simulation = SpringSimulation(_spring, 0, 1, -unitVelocity);
-
     try {
-      _controller.animateWith(simulation);
+      _controller.forward(from: 0);
     } on TickerCanceled catch (e) {
       debugPrint('Ticker canceled: $e');
     }

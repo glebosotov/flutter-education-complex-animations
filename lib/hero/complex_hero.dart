@@ -53,9 +53,7 @@ class HeroPage extends StatelessWidget {
     return Scaffold(
       persistentFooterButtons: [
         ElevatedButton(
-          onPressed: () => Navigator.of(context).popUntil(
-            (route) => route.isFirst,
-          ),
+          onPressed: () => Navigator.of(context).pop(),
           child: const Text('Back home'),
         ),
         ElevatedButton(

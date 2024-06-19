@@ -1,7 +1,5 @@
 PODS:
   - Flutter (1.0.0)
-  - motion_sensors (0.0.1):
-    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -12,7 +10,6 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - motion_sensors (from `.symlinks/plugins/motion_sensors/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - rive_common (from `.symlinks/plugins/rive_common/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
@@ -20,8 +17,6 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  motion_sensors:
-    :path: ".symlinks/plugins/motion_sensors/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   rive_common:
@@ -31,7 +26,6 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  motion_sensors: 03f55b7c637a7e365a0b5f9697a449f9059d5d91
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   rive_common: cbbac3192af00d7341f19dae2f26298e9e37d99e
   sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2

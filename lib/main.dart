@@ -3,9 +3,11 @@ import 'package:interactive_animation_demo/hero/complex_hero.dart';
 import 'package:interactive_animation_demo/hero/hero.dart';
 import 'package:interactive_animation_demo/page_transition.dart';
 import 'package:interactive_animation_demo/painter.dart';
+import 'package:interactive_animation_demo/physics_page.dart';
 import 'package:interactive_animation_demo/rive.dart';
 
 import 'complex_animation/complex_animation.dart';
+import 'tween_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,50 +42,48 @@ class HomePage extends StatelessWidget {
         child: GridView.count(
           padding: const EdgeInsets.all(8),
           crossAxisCount: 2,
-          children: [
+          children: const [
+            _GridTile(
+              name: 'Tween',
+              icon: Icons.timeline,
+              destination: TweenPage(),
+            ),
+            _GridTile(
+              name: 'Physics',
+              icon: Icons.wind_power,
+              destination: PhysicsPage(),
+            ),
             _GridTile(
               name: 'Complex',
               icon: Icons.generating_tokens_rounded,
-              destination: MaterialPageRoute(
-                builder: (_) => const ComplexAnimationPage(),
-              ),
+              destination: ComplexAnimationPage(),
             ),
             _GridTile(
               name: 'Hero',
               icon: Icons.hexagon_rounded,
-              destination: MaterialPageRoute(
-                builder: (_) => const SimpleHero(),
-              ),
+              destination: SimpleHero(),
             ),
             _GridTile(
               name: 'Complex Hero',
               icon: Icons.egg,
-              destination: MaterialPageRoute(
-                builder: (_) => const HeroPage(
-                  heroType: HeroType.from,
-                ),
+              destination: HeroPage(
+                heroType: HeroType.from,
               ),
             ),
             _GridTile(
               name: 'Page Transition',
               icon: Icons.compare_arrows_sharp,
-              destination: MaterialPageRoute(
-                builder: (_) => const PageTransitionExample(),
-              ),
+              destination: PageTransitionExample(),
             ),
             _GridTile(
               name: 'Rive',
               icon: Icons.animation,
-              destination: MaterialPageRoute(
-                builder: (_) => const RivePage(),
-              ),
+              destination: RivePage(),
             ),
             _GridTile(
               name: 'Painter',
               icon: Icons.brush,
-              destination: MaterialPageRoute(
-                builder: (_) => const PainterPage(),
-              ),
+              destination: PainterPage(),
             ),
           ],
         ),
@@ -95,7 +95,7 @@ class HomePage extends StatelessWidget {
 class _GridTile extends StatelessWidget {
   final String name;
   final IconData icon;
-  final Route destination;
+  final Widget destination;
 
   const _GridTile({
     required this.name,
@@ -107,7 +107,11 @@ class _GridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(destination),
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => destination,
+        ),
+      ),
       child: Card.filled(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:foil/foil.dart';
 
@@ -8,18 +6,13 @@ class SimpleHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width =
-        MediaQuery.sizeOf(context).width * (Random().nextDouble() * 0.2 + 0.1);
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
       ),
       persistentFooterButtons: [
         ElevatedButton(
-          onPressed: () => Navigator.of(context).popUntil(
-            (route) => route.isFirst,
-          ),
+          onPressed: () => Navigator.of(context).pop(),
           child: const Text('Back home'),
         ),
         ElevatedButton(
@@ -28,13 +21,9 @@ class SimpleHero extends StatelessWidget {
         ),
       ],
       body: SafeArea(
-        child: Align(
-          alignment: Alignment(
-            Random().nextDouble(),
-            Random().nextDouble(),
-          ),
+        child: Center(
           child: SizedBox(
-            width: width,
+            width: MediaQuery.sizeOf(context).width * 0.4,
             child: Hero(
               tag: 'foil_image',
               child: Foil(
@@ -52,7 +41,39 @@ class SimpleHero extends StatelessWidget {
 
   void _onTap(BuildContext context) => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => const SimpleHero(),
+          builder: (_) => const SimpleHero2(),
         ),
       );
+}
+
+class SimpleHero2 extends StatelessWidget {
+  const SimpleHero2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      persistentFooterButtons: [
+        ElevatedButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Back'),
+        ),
+      ],
+      body: SafeArea(
+        child: Center(
+          child: SizedBox(
+            width: MediaQuery.sizeOf(context).width * 0.9,
+            child: Hero(
+              tag: 'foil_image',
+              child: Foil(
+                opacity: 0.1,
+                child: Image.network(
+                  'https://den-cards.pokellector.com/229/Gyarados-GX.CNV.112.19801.png',
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
