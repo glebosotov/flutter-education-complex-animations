@@ -7,6 +7,7 @@ import 'package:interactive_animation_demo/physics_page.dart';
 import 'package:interactive_animation_demo/rive.dart';
 
 import 'complex_animation/complex_animation.dart';
+import 'implicit_page.dart';
 import 'tween_page.dart';
 
 void main() {
@@ -41,8 +42,13 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: GridView.count(
           padding: const EdgeInsets.all(8),
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           children: const [
+            _GridTile(
+              name: 'Implicit',
+              icon: Icons.double_arrow_sharp,
+              destination: ImplicitPage(),
+            ),
             _GridTile(
               name: 'Tween',
               icon: Icons.timeline,
@@ -118,11 +124,12 @@ class _GridTile extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 60,
+              size: 56,
             ),
             Text(
               name,
-              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
         ),

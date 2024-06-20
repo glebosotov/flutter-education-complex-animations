@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interactive_animation_demo/complex_animation/explicit.dart';
 
+import '../component.dart';
 import 'implicit.dart';
 import 'shader.dart';
 
@@ -16,37 +17,16 @@ class ComplexAnimationPage extends StatelessWidget {
           children: [
             AlignReturner(
               builder: (context, child, isLifted) => PickupScaler(
-                defaultSize: const Size.square(_Component.dimension),
+                defaultSize: const Size.square(Component.dimension),
                 isLifted: isLifted,
                 child: child,
               ),
               child: const SparkleAdder(
-                child: _Component(),
+                child: Component(),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _Component extends StatelessWidget {
-  static const dimension = 200.0;
-
-  const _Component({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: dimension,
-      height: dimension,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/go.png'),
-          fit: BoxFit.cover,
-        ),
-        shape: BoxShape.circle,
       ),
     );
   }
