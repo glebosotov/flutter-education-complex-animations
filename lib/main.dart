@@ -8,6 +8,7 @@ import 'package:interactive_animation_demo/rive.dart';
 
 import 'complex_animation/complex_animation.dart';
 import 'implicit_page.dart';
+import 'state_management/page.dart';
 import 'tween_page.dart';
 
 void main() {
@@ -90,6 +91,11 @@ class HomePage extends StatelessWidget {
               name: 'Painter',
               icon: Icons.brush,
               destination: PainterPage(),
+            ),
+            _GridTile(
+              name: 'State management',
+              icon: Icons.star_rate,
+              destination: StateManagedAnimationPage(),
             ),
           ],
         ),
