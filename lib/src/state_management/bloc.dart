@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 
-///Event
+/// Event
 sealed class AnimationEvent {}
 
 final class StartAnimationEvent extends AnimationEvent {}
