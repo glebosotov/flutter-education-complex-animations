@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_frame/flutter_web_frame.dart';
 
 import 'src/pages.dart';
 
@@ -11,13 +13,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Animations Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return FlutterWebFrame(
+      builder: (context) => MaterialApp(
+        title: 'Animations Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: const HomePage(),
       ),
-      home: const HomePage(),
+      maximumSize: const Size(540, 960),
+      enabled: kIsWeb,
+      backgroundColor: const Color(0xFF313131),
     );
   }
 }
@@ -108,7 +115,7 @@ class _GridTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute<dynamic>(
           builder: (_) => destination,

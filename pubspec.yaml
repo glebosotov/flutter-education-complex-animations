@@ -41,6 +41,7 @@ dependencies:
   flutter_bloc: ^8.1.6
   bloc: ^8.1.4
   video_player: ^2.8.7
+  flutter_web_frame: ^1.0.0
 
 dev_dependencies:
   flutter_test:
