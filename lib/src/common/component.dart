@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
 class Component extends StatelessWidget {
-  static const dimension = 200.0;
-
   const Component({super.key});
+
+  static const dimension = 200.0;
 
   @override
   Widget build(BuildContext context) {

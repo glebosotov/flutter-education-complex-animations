@@ -18,10 +18,10 @@ class _PhysicsPageState extends State<PhysicsPage>
     super.initState();
 
     simulation = GravitySimulation(
-      300.0, // acceleration
-      0.0, // starting point
-      500.0, // end point
-      0.0, // starting velocity
+      300, // acceleration
+      0, // starting point
+      500, // end point
+      0, // starting velocity
     );
 
     controller = AnimationController(
@@ -52,8 +52,9 @@ class _PhysicsPageState extends State<PhysicsPage>
                 top: controller.value,
                 child: GestureDetector(
                   onTap: () {
-                    controller.stop();
-                    controller.animateWith(simulation);
+                    controller
+                      ..stop()
+                      ..animateWith(simulation);
                   },
                   child: Container(
                     decoration: const BoxDecoration(

@@ -7,9 +7,7 @@ class SimpleHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-      ),
+      appBar: AppBar(),
       persistentFooterButtons: [
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(),
@@ -40,7 +38,7 @@ class SimpleHero extends StatelessWidget {
   }
 
   void _onTap(BuildContext context) => Navigator.of(context).push(
-        MaterialPageRoute(
+        MaterialPageRoute<dynamic>(
           builder: (_) => const SimpleHero2(),
         ),
       );

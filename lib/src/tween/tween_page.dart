@@ -13,7 +13,7 @@ class _TweenPageState extends State<TweenPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<Offset> _offsetAnimation;
-  late final Animation _curvedOffsetAnimation;
+  late final Animation<Offset> _curvedOffsetAnimation;
 
   final tween = Tween<Offset>(
     begin: const Offset(10, 0),
@@ -60,7 +60,6 @@ class _TweenPageState extends State<TweenPage>
           animation: _offsetAnimation,
           builder: (context, _) => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 height: 200,

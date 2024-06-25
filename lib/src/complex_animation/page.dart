@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:interactive_animation_demo/complex_animation/explicit.dart';
 
-import '../component.dart';
-import 'implicit.dart';
+import '../common/common.dart';
+import '../implicit/implicit.dart';
+import 'explicit.dart';
 import 'shader.dart';
 
 class ComplexAnimationPage extends StatelessWidget {
@@ -13,7 +13,6 @@ class ComplexAnimationPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Stack(
-          fit: StackFit.loose,
           children: [
             AlignReturner(
               builder: (context, child, isLifted) => PickupScaler(

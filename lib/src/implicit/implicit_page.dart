@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:interactive_animation_demo/complex_animation/implicit.dart';
-import 'package:interactive_animation_demo/component.dart';
+
+import '../common/common.dart';
+import 'implicit_widget.dart';
 
 class ImplicitPage extends StatefulWidget {
   const ImplicitPage({super.key});

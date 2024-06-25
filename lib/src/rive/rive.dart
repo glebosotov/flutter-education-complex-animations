@@ -9,13 +9,14 @@ class RivePage extends StatefulWidget {
 }
 
 class _RivePageState extends State<RivePage> {
-  SMIBool? _clicked;
+  // ignore: unused_field
+  late SMIBool? _clicked;
 
   void _onRiveInit(Artboard artboard) {
     final controller =
         StateMachineController.fromArtboard(artboard, 'State Machine 1');
     artboard.addController(controller!);
-    _clicked = controller.findInput<bool>('Clicked') as SMIBool;
+    _clicked = controller.findInput<bool>('Clicked') as SMIBool?;
   }
 
   @override

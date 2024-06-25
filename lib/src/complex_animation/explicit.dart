@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AlignReturner extends StatefulWidget {
-  final Widget child;
-  final Widget Function(BuildContext, Widget, bool) builder;
-
   const AlignReturner({
     required this.builder,
     required this.child,
     super.key,
   });
+
+  final Widget child;
+  // ignore: avoid_positional_boolean_parameters
+  final Widget Function(BuildContext, Widget, bool) builder;
 
   @override
   State<AlignReturner> createState() => _AlignReturnerState();

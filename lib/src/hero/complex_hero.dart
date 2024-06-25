@@ -4,11 +4,12 @@ import 'package:google_fonts/google_fonts.dart';
 enum HeroType { from, to }
 
 class HeroPage extends StatelessWidget {
-  final HeroType heroType;
   const HeroPage({
     required this.heroType,
     super.key,
   });
+
+  final HeroType heroType;
 
   static const fromLetters = [
     ('T', 'T'),
@@ -87,17 +88,18 @@ class HeroPage extends StatelessWidget {
 }
 
 class _HeroLetter extends StatelessWidget {
-  static final textStyle = GoogleFonts.slacksideOne(
-    fontSize: 40,
-    color: Colors.black,
-  );
-  final String letter;
-  final String tag;
-
   const _HeroLetter({
     required this.letter,
     required this.tag,
   });
+
+  static final textStyle = GoogleFonts.slacksideOne(
+    fontSize: 40,
+    color: Colors.black,
+  );
+
+  final String letter;
+  final String tag;
 
   @override
   Widget build(BuildContext context) => Hero(
@@ -114,7 +116,7 @@ class _HeroLetter extends StatelessWidget {
       );
 }
 
-class CustomPageRoute extends MaterialPageRoute {
+class CustomPageRoute extends MaterialPageRoute<dynamic> {
   CustomPageRoute({required super.builder});
 
   @override

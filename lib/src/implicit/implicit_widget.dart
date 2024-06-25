@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class PickupScaler extends StatelessWidget {
-  final Size defaultSize;
-  final bool isLifted;
-  final Widget child;
-
   const PickupScaler({
     required this.defaultSize,
     required this.isLifted,
     required this.child,
     super.key,
   });
+
+  final Size defaultSize;
+  final bool isLifted;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

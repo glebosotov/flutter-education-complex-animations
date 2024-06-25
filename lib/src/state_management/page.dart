@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 
-import '/state_management/bloc.dart';
+import 'bloc.dart';
 
 class StateManagedAnimationPage extends StatefulWidget {
   const StateManagedAnimationPage({super.key});
@@ -24,7 +24,6 @@ class _StateManagedAnimationPageState extends State<StateManagedAnimationPage> {
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
             children: [
               Container(
                 margin: const EdgeInsets.all(8),
@@ -46,7 +45,7 @@ class _StateManagedAnimationPageState extends State<StateManagedAnimationPage> {
                       Radius.circular(8),
                     ),
                   ),
-                  child: Animation2(),
+                  child: const Animation2(),
                 ),
               ),
             ],
@@ -68,7 +67,7 @@ class _Animation1State extends State<Animation1>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _rotationAnimation;
-  final tween = Tween(begin: 0.0, end: 2 * pi);
+  final tween = Tween<double>(begin: 0, end: 2 * pi);
 
   @override
   void initState() {
@@ -165,7 +164,7 @@ class _Animation2State extends State<Animation2> {
     await _controller.setVolume(0);
     setState(() {});
     if (bloc.state is RunningAnimationState) {
-      _controller.play();
+      await _controller.play();
     }
   }
 
@@ -190,14 +189,15 @@ class _Animation2State extends State<Animation2> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _controller.value.isInitialized
-                ? Flexible(
-                    child: AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    ),
-                  )
-                : const SizedBox.shrink(),
+            if (_controller.value.isInitialized)
+              Flexible(
+                child: AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                ),
+              )
+            else
+              const SizedBox.shrink(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

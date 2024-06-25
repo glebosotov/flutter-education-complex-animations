@@ -36,7 +36,7 @@ final transitions = <String,
   Widget,
 )>{
   'Slide from top': (context, animation, secondaryAnimation, child) {
-    const begin = Offset(0.0, 1.0);
+    const begin = Offset(0, 1);
     const end = Offset.zero;
     const curve = Curves.ease;
 
@@ -64,7 +64,7 @@ final transitions = <String,
   },
 };
 
-Route _createRoute(
+Route<dynamic> _createRoute(
   Widget Function(
     BuildContext,
     Animation<double>,

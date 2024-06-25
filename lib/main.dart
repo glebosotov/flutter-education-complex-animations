@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:interactive_animation_demo/hero/complex_hero.dart';
-import 'package:interactive_animation_demo/hero/hero.dart';
-import 'package:interactive_animation_demo/page_transition.dart';
-import 'package:interactive_animation_demo/painter.dart';
-import 'package:interactive_animation_demo/physics_page.dart';
-import 'package:interactive_animation_demo/rive.dart';
 
-import 'complex_animation/complex_animation.dart';
-import 'implicit_page.dart';
-import 'state_management/page.dart';
-import 'tween_page.dart';
+import 'src/pages.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Animations Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -105,22 +96,21 @@ class HomePage extends StatelessWidget {
 }
 
 class _GridTile extends StatelessWidget {
-  final String name;
-  final IconData icon;
-  final Widget destination;
-
   const _GridTile({
     required this.name,
     required this.icon,
     required this.destination,
-    super.key,
   });
+
+  final String name;
+  final IconData icon;
+  final Widget destination;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.of(context).push(
-        MaterialPageRoute(
+        MaterialPageRoute<dynamic>(
           builder: (_) => destination,
         ),
       ),

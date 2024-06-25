@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:foil/foil.dart';
 
 class SparkleAdder extends StatelessWidget {
-  final Widget child;
-
   const SparkleAdder({
-    super.key,
     required this.child,
+    super.key,
   });
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
