@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foil/foil.dart';
 
 class SimpleHero extends StatelessWidget {
   const SimpleHero({super.key});
@@ -24,11 +23,8 @@ class SimpleHero extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width * 0.4,
             child: Hero(
               tag: 'foil_image',
-              child: Foil(
-                opacity: 0.1,
-                child: Image.network(
-                  'https://den-cards.pokellector.com/229/Gyarados-GX.CNV.112.19801.png',
-                ),
+              child: Image.network(
+                'https://den-cards.pokellector.com/229/Gyarados-GX.CNV.112.19801.png',
               ),
             ),
           ),
@@ -62,11 +58,8 @@ class SimpleHero2 extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width * 0.9,
             child: Hero(
               tag: 'foil_image',
-              child: Foil(
-                opacity: 0.1,
-                child: Image.network(
-                  'https://den-cards.pokellector.com/229/Gyarados-GX.CNV.112.19801.png',
-                ),
+              child: Image.network(
+                'https://den-cards.pokellector.com/229/Gyarados-GX.CNV.112.19801.png',
               ),
             ),
           ),
