@@ -24,7 +24,7 @@ class SimpleHero extends StatelessWidget {
             child: Hero(
               tag: 'foil_image',
               child: Image.network(
-                'https://den-cards.pokellector.com/229/Gyarados-GX.CNV.112.19801.png',
+                'https://avatars.mds.yandex.net/i?id=5497c7dc23d8acedf62e168321c645a8_l-5220447-images-thumbs&n=13',
               ),
             ),
           ),
@@ -59,7 +59,7 @@ class SimpleHero2 extends StatelessWidget {
             child: Hero(
               tag: 'foil_image',
               child: Image.network(
-                'https://den-cards.pokellector.com/229/Gyarados-GX.CNV.112.19801.png',
+                'https://avatars.mds.yandex.net/i?id=5497c7dc23d8acedf62e168321c645a8_l-5220447-images-thumbs&n=13',
               ),
             ),
           ),

@@ -21,7 +21,7 @@ class _PhysicsPageState extends State<PhysicsPage>
       300, // acceleration
       0, // starting point
       500, // end point
-      0, // starting velocity
+      100, // starting velocity
     );
 
     controller = AnimationController(

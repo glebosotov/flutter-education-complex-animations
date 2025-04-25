@@ -56,39 +56,66 @@ class _TweenPageState extends State<TweenPage>
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: AnimatedBuilder(
-          animation: _offsetAnimation,
-          builder: (context, _) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 200,
-                child: Transform.translate(
-                  offset: _offsetAnimation.value,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 200,
+              child: AnimatedBuilder(
+                animation: _offsetAnimation,
+                builder: (context, _) {
+                  return Transform.translate(
+                    offset: _offsetAnimation.value,
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.redAccent,
+                      ),
+                      width: 100,
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: AnimatedBuilder(
+                animation: _curvedOffsetAnimation,
+                builder: (context, _) {
+                  return Transform.translate(
+                    offset: _curvedOffsetAnimation.value,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.blueAccent,
+                      ),
+                      width: 100,
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: TweenAnimationBuilder<Offset>(
+                tween: tween,
+                duration: const Duration(seconds: 3),
+                builder: (context, value, _) => Transform.translate(
+                  offset: value,
                   child: Container(
+                    alignment: Alignment.center,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.redAccent,
+                      color: Colors.green,
                     ),
                     width: 100,
                   ),
                 ),
               ),
-              SizedBox(
-                height: 200,
-                child: Transform.translate(
-                  offset: _curvedOffsetAnimation.value,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.blueAccent,
-                    ),
-                    width: 100,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
